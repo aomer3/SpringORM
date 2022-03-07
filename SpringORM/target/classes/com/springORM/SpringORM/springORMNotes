@@ -1,0 +1,76 @@
+Object Relational Mapping (ORM)
+1. In JDBC or Spring JDBC approaches, we write out all of the sql statements to 
+   perform CRUD functionalities, and when the response comes back from the database, 
+   we write out the code to convert the database result into Java objects
+2. ORM takes out of this extra leg work to map objects to the database. 
+
+ORM approach
+1. Create an object 
+2. Map each field of object to table rows in a table
+3. ORM will do all of the mapping behind the scenes 
+4. With ORM, we will not be writing any SQL to perform CRUD operations (ORM will do 
+   that for us)
+
+Java Persistence API (JPA)
+1. JPA is the Java EE standard for doing ORM 
+2. Like any other standard, JPA has an API and speficiations on how to implement the 
+   API
+	a. API - library of annotations, interfaces and classes for the developer to use 
+	b. specifications - an implementation of the JPA standard 
+3. Hibernate is the most population implementation of JPA
+
+
+---------------------------------------------------------------------------------
+
+SpringORM
+1. The same way Spring makes it easier to work with JDBC by providing JDBCTemplate, 
+   Spring also makes it easier to work with Hibernate by providing a HibernateTemplate 
+2. When using HibernateTemplate, we don't have to worry about boilerplate code like 
+   creating
+   a Hibernate session, etc. 
+3. HibernateTemplate methods:
+	a. save - saves a Java object into a database table 
+	b. update - updates a table row with a Java object
+	c. delete - deletes a table row 
+	d. get - returns one record from the database
+	e. loadAll - returns all records (as a list) from the database
+
+
+SpringORM design pattern 
+
+Example: Products in a product table 
+
+1. Create ProductDao - interface 
+	a. has a HibernateTemplate dependency 
+	b. HibernateTemplate uses SessionFactory interface (responsible for establishing 
+	   the session connection)
+	c. LocalSessionFactoryBean implements SessionFactory 
+	d. We need to also configure a TransactionManager for write statements to the 
+           database to ensure that either a collection of statements all execute or 
+           none of the statements are executed 
+2. Create ProductDaoImp - implements ProductDao
+
+
+LocalSessionFactoryBean
+1. Has three arguments 
+	a. dataSource
+	b. hibernateProperties (key-value pairs)
+		1. hibernate.dialect = generates sql statements from the operations we 
+                   provide from the objects (crud functionalities)
+		2. hibernate.show_sql = by default, hibernate will not display all of the 		           sql statements that it provides. This will tell it to provide all sqls
+	c. annotatedClasses
+
+
+
+ORM Mapping
+1. Can be done with either XML or annotations 
+2. Annotations are easier and the more used method. Common annotations include:
+	a. @Entity - mandatory, must use for every class being mapped 
+	b. @Id - mandatory, identifies primary key, must use for every class being mapped
+	c. @Table - optional, only use when class name differs from table name 
+	d. @Column - optional, only use when class fields differ from table column names,
+                     or if we want to use @Column attributes 
+
+
+
+

@@ -1,0 +1,21 @@
+Transaction Management Notes
+1. When developing an application, it will execute multiple statements against the 
+   database. In some cases, we may want all of these statements to all either 
+   execute or if one or more statement fails, for none of them to execute 
+2. To do this, transaction management uses 
+	a. commit
+	b. rollback
+
+Example of transaction management use case: when a money transfer is done, it is 
+debited it from the sender and credited to the receiver. We need both of these 
+statements to be successful (commit the transaction) or if one statement fails, 
+for neither of them to be successful (rollback both statements)
+
+
+How to do Transaction Management 
+1. Use HibernateTransactionManager
+2. Configure by using: <tx:annotation-driven/>
+3. Add annotation to methods that will need transaction management: @Transactional
+4. Spring will then wrap all methods marked @Transactional and bundle them together, 
+   so when executing each of those statements, they will either all succeed and be 
+   committed, or if one fails all will be rolled backed
